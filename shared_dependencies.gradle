@@ -36,6 +36,6 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // DI
-    implementation 'org.koin:koin-android:3.5.3'
-    implementation 'org.koin:koin-androidx-viewmodel:3.5.3'
+    implementation 'org.koin:koin-android:3.5.0'
+    implementation 'org.koin:koin-androidx-viewmodel:3.5.0'
 }
