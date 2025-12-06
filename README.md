@@ -62,4 +62,4 @@ Each module will be connected to an external public api, to pull random data.
 
 Just crediting various resources that helped shape up this project:
 
-* Icons - [icons8](https://icons8.com)
+* Icons - [icons8](https://icons8.com) ..
