@@ -1,28 +1,32 @@
-apply plugin: 'com.android.dynamic-feature'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
+plugins {
+    id 'com.android.dynamic-feature'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+}
 
 apply from: '../shared_dependencies.gradle'
 
 android {
-    compileSdkVersion 29
+    namespace "com.androidstudy.movies"
+    compileSdk 34
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdk 21
+        targetSdk 34
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-}
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 }
 
@@ -31,12 +35,12 @@ dependencies {
     implementation project(':app')
 
     // Room db
-    implementation 'androidx.room:room-runtime:2.2.0'
-    kapt 'androidx.room:room-compiler:2.2.0'
-    implementation 'androidx.room:room-ktx:2.2.0'
+    implementation 'androidx.room:room-runtime:2.6.1'
+    kapt 'androidx.room:room-compiler:2.6.1'
+    implementation 'androidx.room:room-ktx:2.6.1'
 
     // Paging
-    implementation 'androidx.paging:paging-runtime-ktx:2.1.0-rc01'
+    implementation 'androidx.paging:paging-runtime-ktx:3.2.1'
 
     implementation project(path: ':core')
 }

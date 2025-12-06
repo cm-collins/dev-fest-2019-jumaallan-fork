@@ -1,68 +1,78 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
+// Use the 'plugins' block for modern Gradle syntax
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    // 'kotlin-android-extensions' is deprecated and replaced by View Binding or FindViewById
+    // id 'kotlin-android-extensions' // This should be removed
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize' // Replacement for @Parcelize in kotlin-android-extensions
+}
 
 apply from: '../shared_dependencies.gradle'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    // It's good practice to define versions in the root build.gradle or gradle.properties
+    namespace "com.androidstudy.devfest19" // Namespace is mandatory in modern AGP
+    compileSdk 34 // Updated to a more recent SDK version
+    buildToolsVersion "34.0.0" // Optional, as AGP sets a default
 
     defaultConfig {
         applicationId "com.androidstudy.devfest19"
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdk 21
+        targetSdk 34 // Updated to match compileSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", 'openMapApiKey', openMapApiKey
+            // BuildConfig fields should be defined carefully. Assuming openMapApiKey is in gradle.properties
+            buildConfigField "String", 'openMapApiKey', "project.findProperty('openMapApiKey') ?: ''"
         }
-        debug{
-            buildConfigField "String", 'openMapApiKey', openMapApiKey
+        debug {
+            buildConfigField "String", 'openMapApiKey', "project.findProperty('openMapApiKey') ?: ''"
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    androidExtensions {
-        experimental = true
+        jvmTarget = "17"
     }
 
-    dynamicFeatures = [":music", ":weather", ":news", ":movies"]
+    // New syntax for enabling features like View Binding (replaces kotlin-android-extensions)
+    buildFeatures {
+        viewBinding true
+        // buildConfig is true by default, but can be explicit
+        buildConfig true
+    }
+
+    dynamicFeatures = [":music", ":weather",":news",":movies"]
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
+// This is no longer necessary as kotlinOptions in the android block handles it
+// tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all { ... }
 
 dependencies {
-    api 'androidx.appcompat:appcompat:1.1.0'
-    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    api 'androidx.appcompat:appcompat:1.6.1' // Updated version
+    api 'androidx.constraintlayout:constraintlayout:2.1.4' // Updated version
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api 'androidx.core:core-ktx:1.1.0'
+    // Kotlin stdlib is included automatically with Kotlin plugin, no need to declare
+    api 'androidx.core:core-ktx:1.12.0'
 
-    // dynamic delivery
-    api 'com.google.android.play:core:1.6.3'
+    // dynamic delivery - Play Core is deprecated, use Play Core KTX instead
+    api 'com.google.android.play:core-ktx:1.8.1'
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.0.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation 'junit:junit:4.13.2' // Updated version
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5' // Updated version
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1' // Updated version
 
     implementation project(path: ':core')
 }
