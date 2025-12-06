@@ -35,7 +35,7 @@ dependencies {
     implementation 'io.coil-kt:coil:2.5.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    // DI
-    implementation 'org.koin:koin-android:3.5.0'
-    implementation 'org.koin:koin-androidx-viewmodel:3.5.0'
+    // DI - Koin 3.x uses io.insert-koin group ID
+    implementation 'io.insert-koin:koin-android:3.2.2'
+    implementation 'io.insert-koin:koin-androidx-viewmodel:3.2.2'
 }
