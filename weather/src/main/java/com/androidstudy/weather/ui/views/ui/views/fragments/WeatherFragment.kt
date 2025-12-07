@@ -2,24 +2,47 @@ package com.androidstudy.weather.ui.views.ui.views.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import com.androidstudy.devfest19.core.livedata.nonNull
 import com.androidstudy.devfest19.core.livedata.observe
+import com.androidstudy.devfest19.core.toast
 import com.androidstudy.weather.R
 import com.androidstudy.weather.ui.views.models.WeatherResponseModel
 import com.androidstudy.weather.ui.views.ui.viewmodels.WeatherViewModel
 import com.androidstudy.weather.ui.views.utils.toDate
-import kotlinx.android.synthetic.main.fragment_weather.*
-import org.jetbrains.anko.toast
 
 class WeatherFragment : Fragment(R.layout.fragment_weather) {
-    private val weatherViewModel by lazy {
-        ViewModelProviders.of(this).get(WeatherViewModel::class.java)
-    }
+    private val weatherViewModel: WeatherViewModel by viewModels()
+    
+    private lateinit var address: TextView
+    private lateinit var updated_at: TextView
+    private lateinit var status: TextView
+    private lateinit var temp: TextView
+    private lateinit var temp_min: TextView
+    private lateinit var temp_max: TextView
+    private lateinit var wind: TextView
+    private lateinit var pressure: TextView
+    private lateinit var humidity: TextView
+    private lateinit var sunrise: TextView
+    private lateinit var sunset: TextView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Initialize views
+        address = view.findViewById(R.id.address)
+        updated_at = view.findViewById(R.id.updated_at)
+        status = view.findViewById(R.id.status)
+        temp = view.findViewById(R.id.temp)
+        temp_min = view.findViewById(R.id.temp_min)
+        temp_max = view.findViewById(R.id.temp_max)
+        wind = view.findViewById(R.id.wind)
+        pressure = view.findViewById(R.id.pressure)
+        humidity = view.findViewById(R.id.humidity)
+        sunrise = view.findViewById(R.id.sunrise)
+        sunset = view.findViewById(R.id.sunset)
 
         fetchWeather()
         observeLiveData()
@@ -38,7 +61,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
             setupViews(weatherResponseModel)
         }
         weatherViewModel.getWeatherError().nonNull().observe(this) {
-            activity?.toast(it)
+            requireActivity().toast(it)
         }
     }
 
@@ -46,7 +69,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         address.text = "${weatherResponseModel.name},${weatherResponseModel.sys.country}"
         status.text = weatherResponseModel.weather[0].description
         updated_at.text = "Updated at : ${weatherResponseModel.dt.toDate("dd/MM/yyyy hh:mm a")}"
-        sunset.text = weatherResponseModel.sys.sunrise.toDate("hh:mm a")
+        sunrise.text = weatherResponseModel.sys.sunrise.toDate("hh:mm a")
         sunset.text = weatherResponseModel.sys.sunset.toDate("hh:mm a")
         temp.text = "${weatherResponseModel.main.temp} °C"
         temp_min.text = "Min Temp: ${weatherResponseModel.main.temp_min}°C"

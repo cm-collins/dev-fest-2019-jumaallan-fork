@@ -1,7 +1,7 @@
 package com.androidstudy.movies.data.remote
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Location(

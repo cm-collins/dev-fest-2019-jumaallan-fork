@@ -15,20 +15,20 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-fun injectFeature() = loadFeature
-
-private val loadFeature by lazy {
+fun injectFeature() {
     loadKoinModules(
-        retrofit,
-        movieDatabase,
-        movieDao,
-        charactersDao,
-        characterRepository,
-        characterViewModel
+        listOf(
+            retrofit,
+            movieDatabase,
+            movieDao,
+            charactersDao,
+            characterRepository,
+            characterViewModel
+        )
     )
 }
 
-val retrofit = module(override = true) {
+val retrofit = module {
     single {
 
         val interceptor = HttpLoggingInterceptor()

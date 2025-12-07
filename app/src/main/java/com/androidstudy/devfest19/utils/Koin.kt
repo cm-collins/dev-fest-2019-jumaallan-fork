@@ -1,20 +1,20 @@
 package com.androidstudy.devfest19.utils
 
 import org.koin.core.KoinApplication
-import org.koin.core.logger.KOIN_TAG
 import org.koin.core.logger.Level
 import org.koin.core.logger.Logger
-import org.koin.core.logger.MESSAGE
 import timber.log.Timber
 
 private class TimberLogger(level: Level = Level.INFO) : Logger(level) {
 
-    override fun log(level: Level, msg: MESSAGE) {
+    override fun display(level: Level, msg: String) {
         if (this.level <= level) {
-            when (this.level) {
-                Level.DEBUG -> Timber.tag(KOIN_TAG).d(msg)
-                Level.INFO -> Timber.tag(KOIN_TAG).i(msg)
-                Level.ERROR -> Timber.tag(KOIN_TAG).e(msg)
+            when (level) {
+                Level.DEBUG -> Timber.tag("KOIN").d(msg)
+                Level.INFO -> Timber.tag("KOIN").i(msg)
+                Level.ERROR -> Timber.tag("KOIN").e(msg)
+                Level.WARNING -> Timber.tag("KOIN").w(msg)
+                Level.NONE -> { /* No logging */ }
             }
         }
     }
@@ -22,6 +22,6 @@ private class TimberLogger(level: Level = Level.INFO) : Logger(level) {
 }
 
 fun KoinApplication.timberLogger(level: Level = Level.INFO): KoinApplication {
-    KoinApplication.logger = TimberLogger(level)
+    logger(TimberLogger(level))
     return this
 }

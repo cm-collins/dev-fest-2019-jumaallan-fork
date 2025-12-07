@@ -12,11 +12,12 @@ import com.androidstudy.devfest19.utils.CustomGridLayoutManager
 import com.androidstudy.devfest19.utils.intentTo
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
-import kotlinx.android.synthetic.main.content_main.*
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var splitInstallManager: SplitInstallManager
+    private lateinit var recyclerViewModules: RecyclerView
 
     private val movieModule by lazy { getString(R.string.title_movies) }
     private val musicModule by lazy { getString(R.string.title_music) }
@@ -28,6 +29,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         splitInstallManager = SplitInstallManagerFactory.create(this)
+        
+        // Initialize RecyclerView using findViewById (View Binding generates binding classes but findViewById works too)
+        recyclerViewModules = findViewById(R.id.recyclerViewModules)
 
         setup()
 

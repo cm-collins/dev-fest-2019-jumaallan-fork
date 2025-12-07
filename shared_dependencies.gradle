@@ -36,6 +36,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // DI - Koin 3.x uses io.insert-koin group ID
-    implementation 'io.insert-koin:koin-android:3.4.3'
-    implementation 'io.insert-koin:koin-androidx-viewmodel:3.4.3'
+    // Using BOM for version management
+    implementation platform('io.insert-koin:koin-bom:3.5.0')
+    implementation 'io.insert-koin:koin-android'
 }

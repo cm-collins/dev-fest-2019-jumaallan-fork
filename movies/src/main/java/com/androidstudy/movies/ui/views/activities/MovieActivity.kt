@@ -27,7 +27,6 @@ class MovieActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
-        onBackPressed()
         return true
     }
 

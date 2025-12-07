@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import coil.load
 import com.androidstudy.movies.R
 import com.androidstudy.movies.data.remote.Character
-import kotlinx.android.synthetic.main.row_movie_item.view.*
 
 typealias  ClickListener = (Character) -> Unit
 
@@ -38,8 +37,8 @@ class CharactersAdapter(
     class CharactersViewHolder(
         itemView: View, private val clickListener: ClickListener
     ) : RecyclerView.ViewHolder(itemView) {
-        private val imageViewCharacterImage: ImageView = itemView.imageViewCharacterImage
-        private val textViewCharacterName: TextView = itemView.textViewCharacterName
+        private val imageViewCharacterImage: ImageView = itemView.findViewById(R.id.imageViewCharacterImage)
+        private val textViewCharacterName: TextView = itemView.findViewById(R.id.textViewCharacterName)
 
         fun bindCharacter(character: Character) {
             with(character) {
